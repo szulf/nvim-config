@@ -123,8 +123,6 @@ require('lazy').setup({
 
 	-- Fuzzy finder
 	{ 'nvim-telescope/telescope.nvim',
-		-- event = 'VimEnter',
-		-- branch = '0.1.x',
 		dependencies = {
 			-- Required dependency
 			{ 'nvim-lua/plenary.nvim' },
@@ -156,19 +154,31 @@ require('lazy').setup({
 			pcall(require('telescope').load_extension, 'fzf')
 			pcall(require('telescope').load_extension, 'ui-select')
 
+			-- Telescope shows hidden files
+			-- need to tinker with this tho
+			-- dont know if I like that
+			require('telescope').setup({
+				pickers = {
+					find_files = {
+						hidden = true
+					}
+				}
+			})
+
 			-- Requiring builtin functions
 			local builtin = require('telescope.builtin')
+			local function map(key, action, desc)
+				vim.keymap.set('n', key, action, { desc = desc })
+			end
 
 			-- Some keymaps to move around
-			vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = '[F]uzzy find [F]iles' })
-			vim.keymap.set('n', '<leader>fg', builtin.git_files, { desc = '[F]uzzy find [G]it' })
-			vim.keymap.set('n', '<leader>fs', builtin.grep_string, { desc = '[F]uzzy find [S]tring' })
-			vim.keymap.set('n', '<leader>fl', builtin.live_grep, { desc = '[F]uzzy find [L]ive grep' })
-			vim.keymap.set('n', '<leader>fd', builtin.diagnostics, { desc = '[F]uzzy search [D]iagnostics' })
+			map('<leader>ff', builtin.find_files, '[F]uzzy find [F]iles')
+			map('<leader>fg', builtin.git_files, '[F]uzzy find [G]it')
+			map('<leader>fs', builtin.grep_string, '[F]uzzy find [S]tring')
+			map('<leader>fl', builtin.live_grep, '[F]uzzy find [L]ive grep')
+			map('<leader>fd', builtin.diagnostics, '[F]uzzy search [D]iagnostics')
 		end
 	},
-
-	-- LSP :)
 	{
 		'neovim/nvim-lspconfig',
 		dependencies = {
@@ -188,8 +198,8 @@ require('lazy').setup({
 				callback = function(event)
 
 					-- Some basic keymaps
-					local function map(key, func, desc)
-						vim.keymap.set('n', key, func, { desc = 'LSP: ' .. desc })
+					local function map(key, action, desc)
+						vim.keymap.set('n', key, action, { desc = 'LSP: ' .. desc })
 					end
 
 					local builtin = require('telescope.builtin')
