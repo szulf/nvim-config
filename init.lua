@@ -244,6 +244,9 @@ require('lazy').setup({
 						}
 					}
 				},
+				tsserver = {},
+				html = {},
+				jedi_language_server = {},
 			}
 
 			require('mason').setup()
