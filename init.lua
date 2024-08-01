@@ -22,7 +22,7 @@ vim.opt.splitbelow = true
 
 -- A way of displaying whitespace
 vim.opt.list = true
-vim.opt.listchars = { trail = '·', tab = '│ ' }
+vim.opt.listchars = { trail = '·', tab = '  ' }
 
 -- Mode already shown in status line
 vim.opt.showmode = false
@@ -32,6 +32,9 @@ vim.opt.termguicolors = true
 
 -- Showing the cursor line
 vim.opt.cursorline = true
+
+-- Block cursor on insert mode
+vim.opt.guicursor = ""
 
 -- Showing the signcolumn
 vim.opt.signcolumn = 'yes'
@@ -95,7 +98,7 @@ require('lazy').setup({
 	{ 'numToStr/Comment.nvim', opts = {}},
 
 	-- Theme
-	{ 'rebelot/kanagawa.nvim', opts = {}},
+	{ "ellisonleao/gruvbox.nvim", priority = 100, config = true, opts = {} },
 
 	-- Signs to represent github changes
 	{ 'lewis6991/gitsigns.nvim', opts = {
@@ -189,9 +192,6 @@ require('lazy').setup({
 
 			-- LSP notifications
 			{ 'j-hui/fidget.nvim', opts = {}},
-
-			-- Tools for lua nvim development
-			{ 'folke/neodev.nvim', opts = {}},
 		},
 		config = function()
 			vim.api.nvim_create_autocmd('LspAttach', {
@@ -234,19 +234,39 @@ require('lazy').setup({
 
 			local servers = {
 				clangd = {},
-				jdtls = {},
+
+				zls = {},
+
 				lua_ls = {
 					settings = {
 						Lua = {
+							runtime = {
+								version = 'Lua 5.4',
+								path = {
+									'?.lua',
+									'?/init.lua',
+									vim.fn.expand'~/.luarocks/share/lua/5.4/?.lua',
+									vim.fn.expand'~/.luarocks/share/lua/5.4/?/init.lua',
+									'/usr/share/5.4/?.lua',
+									'/usr/share/lua/5.4/?/init.lua',
+									vim.fn.expand'~/.luarocks/lib/luarocks/rocks-5.4/?.so',
+									vim.fn.expand'~/.luarocks/lib/lua/5.4/?.so'
+								}
+							},
+							workspace = {
+								library = {
+									-- vim.fn.expand'~/.luarocks/lib/luarocks/rocks-5.4/',
+									vim.fn.expand'~/.luarocks/lib/lua/5.4/',
+									vim.fn.expand'~/.luarocks/share/lua/5.4',
+									'/usr/share/lua/5.4'
+								}
+							},
 							completion = {
 								callSnippet = 'Replace',
 							}
 						}
 					}
 				},
-				tsserver = {},
-				html = {},
-				jedi_language_server = {},
 			}
 
 			require('mason').setup()
@@ -316,7 +336,6 @@ require('lazy').setup({
 		'nvim-lualine/lualine.nvim',
 		config = function()
 			require('lualine').setup({
-				-- options = { theme = grubox },
 				options = {
 					theme = 'gruvbox_dark',
 					icons_enabled = false,
@@ -341,12 +360,24 @@ require('lazy').setup({
 		end
 	},
 
-	{ 'ThePrimeagen/vim-be-good' },
+	{
+		"folke/lazydev.nvim",
+		ft = "lua", -- only load on lua files
+		opts = {
+			library = {
+				-- See the configuration section for more details
+				-- Load luvit types when the `vim.uv` word is found
+				{ path = "luvit-meta/library", words = { "vim%.uv" } },
+			},
+		},
+	},
+
+	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
 
 }, {})
 
 -- Command needed to get the theme working
-vim.cmd('colorscheme kanagawa')
+vim.cmd('colorscheme gruvbox')
 
 -- Enable the transparent background
 vim.cmd('TransparentEnable')
