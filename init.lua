@@ -68,6 +68,9 @@ vim.keymap.set('n', '<leader>fe', '<cmd>:Ex<CR>')
 vim.keymap.set('n', '<C-d>', '<C-d>zz')
 vim.keymap.set('n', '<C-u>', '<C-u>zz')
 
+-- Better keybind for switching between two files
+vim.keymap.set('n', '<C-Tab>', '<C-6>')
+
 -- Highlighting the text after yanking
 vim.api.nvim_create_autocmd('TextYankPost', {
 	desc = 'Highlight text after yanking',
@@ -208,7 +211,7 @@ require('lazy').setup({
 					map('gr', builtin.lsp_references, '[G]oto [R]eference')
 					map('gi', builtin.lsp_implementations, '[G]oto [I]mplementation')
 					map('<leader>D', builtin.lsp_type_definitions, 'Goto type [D]efinition')
-					map('H', vim.lsp.buf.hover, '[H]over Documentation')
+					map('K', vim.lsp.buf.hover, '[H]over Documentation')
 					map('<leader>ca', vim.lsp.buf.code_action, '[C]ode [A]ction')
 					map('<leader>rn', vim.lsp.buf.rename, '[R]e[N]ame')
 
@@ -234,6 +237,8 @@ require('lazy').setup({
 
 			local servers = {
 				clangd = {},
+
+				cmake = {},
 
 				zls = {},
 
@@ -357,6 +362,8 @@ require('lazy').setup({
 		},
 		config = function(_, opts)
 			require('nvim-treesitter.configs').setup(opts)
+			vim.treesitter.language.register("glsl", "vert")
+			vim.treesitter.language.register("glsl", "frag")
 		end
 	},
 
@@ -373,7 +380,6 @@ require('lazy').setup({
 	},
 
 	{ "Bilal2453/luvit-meta", lazy = true }, -- optional `vim.uv` typings
-
 }, {})
 
 -- Command needed to get the theme working
