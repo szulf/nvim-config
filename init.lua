@@ -272,6 +272,8 @@ require('lazy').setup({
 						}
 					}
 				},
+
+				glsl_analyzer = {},
 			}
 
 			require('mason').setup()
@@ -362,8 +364,6 @@ require('lazy').setup({
 		},
 		config = function(_, opts)
 			require('nvim-treesitter.configs').setup(opts)
-			vim.treesitter.language.register("glsl", "vert")
-			vim.treesitter.language.register("glsl", "frag")
 		end
 	},
 
