@@ -13,14 +13,6 @@ return {
     },
 
     {
-        'xiyaowong/transparent.nvim',
-        opts = {},
-        config = function()
-            vim.cmd('TransparentEnable')
-        end,
-    },
-
-    {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         opts = {
