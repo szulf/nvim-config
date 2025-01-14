@@ -4,11 +4,11 @@ end
 
 return {
     {
-        'aktersnurra/no-clown-fiesta.nvim',
+        'andreypopp/vim-colors-plain',
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd('colorscheme no-clown-fiesta')
+            vim.cmd('colorscheme plain')
         end,
     },
 
@@ -16,11 +16,13 @@ return {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate',
         opts = {
-            ensure_installed = { 'lua', 'nix' },
+            ensure_installed = { 'lua', 'cpp', 'glsl', 'vim', 'vimdoc', 'markdown', 'bash' },
             auto_install = true,
+            highlight = { enable = 'true' },
         },
         config = function(_, opts)
             require('nvim-treesitter.configs').setup(opts)
+            vim.treesitter.language.register("angular", { "html" })
         end,
     },
 
@@ -103,6 +105,37 @@ return {
 
             local servers = {
                 lua_ls = {},
+
+                clangd = {
+                    cmd = {
+                        "clangd",
+                        "--clang-tidy",
+                    },
+                },
+
+                pylsp = {
+                    settings = {
+                        pylsp = {
+                            plugins = {
+                                pycodestyle = {
+                                    enabled = true,
+                                    ignore = {'E501'},
+                                    maxLineLength = 120,
+                                },
+                            },
+                        }
+                    },
+                },
+
+                cmake = {},
+
+                glsl_analyzer = {},
+
+                html = {},
+
+                ts_ls = {},
+
+                gopls = {},
             }
 
             require('mason').setup()
@@ -112,6 +145,8 @@ return {
             require('mason-tool-installer').setup({ ensure_installed = ensure_installed })
 
             require('mason-lspconfig').setup({
+                ensure_installed = ensure_installed,
+                automatic_installation = false,
                 handlers = {
                     function(server_name)
                         local server = servers[server_name] or {}
