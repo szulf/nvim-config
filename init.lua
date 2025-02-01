@@ -39,6 +39,7 @@ map('<leader>dn', vim.diagnostic.goto_next, '[D]iagnostics [N]ext')
 map('<leader>dp', vim.diagnostic.goto_prev, '[D]iagnostics [P]rev')
 map('<leader>de', vim.diagnostic.open_float, '[D]iagnostics [E]rror')
 map('<leader>dq', vim.diagnostic.setloclist, '[D]iagnostics [Q]uickfix')
+map('<leader>ds', vim.diagnostic.open_float, '')
 
 map('<C-h>', '<C-w><C-h>', 'Move to window [H]')
 map('<C-j>', '<C-w><C-j>', 'Move to window [J]')
