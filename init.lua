@@ -20,9 +20,7 @@ vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
 vim.opt.list = true
-vim.opt.listchars = { trail = '·', tab = '  ' }
-
-vim.opt.showmode = false
+vim.opt.listchars = { trail = '·', tab = '> ' }
 
 vim.opt.termguicolors = true
 
@@ -34,12 +32,6 @@ vim.opt.hlsearch = true
 map('<Esc>', function() vim.cmd('nohlsearch') end)
 
 vim.o.clipboard = 'unnamedplus'
-
-map('<leader>dn', vim.diagnostic.goto_next, '[D]iagnostics [N]ext')
-map('<leader>dp', vim.diagnostic.goto_prev, '[D]iagnostics [P]rev')
-map('<leader>de', vim.diagnostic.open_float, '[D]iagnostics [E]rror')
-map('<leader>dq', vim.diagnostic.setloclist, '[D]iagnostics [Q]uickfix')
-map('<leader>ds', vim.diagnostic.open_float, '')
 
 map('<C-h>', '<C-w><C-h>', 'Move to window [H]')
 map('<C-j>', '<C-w><C-j>', 'Move to window [J]')
