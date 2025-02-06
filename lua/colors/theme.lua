@@ -1,3 +1,19 @@
+-- mostly gray, blue functions, nice slightly yellow strings tho
+-- local colors = {
+--   constants = '#dec7a0',
+--   error = '#ffc0b9',
+--   functions = '#7e97ab',
+--   statement = '#727272',
+--   types = '#c3c3c3'
+-- }
+--
+-- vim.api.nvim_set_hl(0, 'Statement', { fg = colors.statement })
+-- vim.api.nvim_set_hl(0, '@type', { bold = true })
+-- vim.api.nvim_set_hl(0, '@type.builtin', { bold = true })
+-- vim.api.nvim_set_hl(0, 'Constant', { fg = colors.constants })
+-- vim.api.nvim_set_hl(0, 'Function', { fg = colors.functions })
+-- vim.api.nvim_set_hl(0, 'ErrorMsg', { fg = colors.error })
+
 local colors = {
   gray = '#708090',
   brown = '#645452',
@@ -8,16 +24,6 @@ local colors = {
   constants = '#81a3a0',
   types = '#ceab6f',
 }
-
--- vim.api.nvim_set_hl(0, 'Normal', { bg = colors.dark_bg })
--- vim.api.nvim_set_hl(0, 'Statement', { fg = colors.statement })
--- vim.api.nvim_set_hl(0, 'Function', { fg = colors.func })
--- vim.api.nvim_set_hl(0, 'Identifier', { fg = colors.white })
--- vim.api.nvim_set_hl(0, 'Constant', { fg = colors.constant })
--- vim.api.nvim_set_hl(0, '@type', { fg = colors.cyan })
--- vim.api.nvim_set_hl(0, '@type.builtin', { fg = colors.cyan })
--- vim.api.nvim_set_hl(0, 'Structure', { fg = colors.white })
--- vim.api.nvim_set_hl(0, 'Todo', { fg = colors.white, bold = true })
 
 vim.api.nvim_set_hl(0, 'Statement', { fg = colors.statement })
 vim.api.nvim_set_hl(0, '@type', { fg = colors.types })

@@ -55,3 +55,18 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 require('config.lazy')
 
 require('colors.theme')
+
+map('<leader>mk', function() vim.cmd('make') end, 'Build the current project')
+map('<leader>mo', function() vim.cmd('copen') end, 'View the compilation window')
+local function load_local_makeprg()
+    local project_file = vim.fn.getcwd() .. '/makeprg.lua'
+    if vim.fn.filereadable(project_file) == 1 then
+        dofile(project_file)
+    end
+end
+
+vim.api.nvim_create_augroup('ProjectConfig', { clear = true })
+vim.api.nvim_create_autocmd('BufEnter', {
+    group = 'ProjectConfig',
+    callback = load_local_makeprg,
+})
