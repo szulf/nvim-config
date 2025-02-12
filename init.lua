@@ -54,8 +54,6 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require('config.lazy')
 
-require('colors.theme')
-
 map('<leader>mk', function() vim.cmd('make') end, 'Build the current project')
 map('<leader>mo', function() vim.cmd('copen') end, 'View the compilation window')
 local function load_local_makeprg()
@@ -70,3 +68,7 @@ vim.api.nvim_create_autocmd('BufEnter', {
     group = 'ProjectConfig',
     callback = load_local_makeprg,
 })
+
+if vim.g.neovide then
+    vim.opt.guifont = "JetBrains Mono NL:h11"
+end

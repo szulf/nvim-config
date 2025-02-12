@@ -4,11 +4,11 @@ end
 
 return {
     {
-        'andreypopp/vim-colors-plain',
+        'aktersnurra/no-clown-fiesta.nvim',
         lazy = false,
         priority = 1000,
         config = function()
-            vim.cmd('colorscheme plain')
+            vim.cmd('colorscheme no-clown-fiesta')
         end,
     },
 
