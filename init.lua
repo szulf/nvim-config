@@ -57,9 +57,10 @@ require('config.lazy')
 map('<leader>mk', function() vim.cmd('make') end, 'Build the current project')
 map('<leader>mo', function() vim.cmd('copen') end, 'View the compilation window')
 local function load_local_makeprg()
-    local project_file = vim.fn.getcwd() .. '/makeprg.lua'
+    local project_file = vim.fn.getcwd() .. '/makeprg'
     if vim.fn.filereadable(project_file) == 1 then
-        dofile(project_file)
+        local text = table.concat(vim.fn.readfile(project_file), '\n')
+        vim.opt_local.makeprg = text
     end
 end
 
