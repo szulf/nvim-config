@@ -41,7 +41,7 @@ map('<C-l>', '<C-w><C-l>', 'Move to window [L]')
 map('<C-d>', '<C-d>zz', 'Go down and center')
 map('<C-u>', '<C-u>zz', 'Go up and center')
 
-map('<C-Tab>', '<C-6>', 'Switch between two buffers')
+map('<C-Space>', '<C-6>', 'Switch between two buffers')
 
 map('<leader>fe', function() vim.cmd('Oil') end, 'Open the file explorer')
 
@@ -73,3 +73,5 @@ vim.api.nvim_create_autocmd('BufEnter', {
 if vim.g.neovide then
     vim.opt.guifont = "JetBrains Mono NL:h11"
 end
+
+map('<leader>ds', vim.diagnostic.open_float, 'Show the whole diagnostic msg')
