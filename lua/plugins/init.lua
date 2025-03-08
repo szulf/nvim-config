@@ -4,11 +4,15 @@ end
 
 return {
     {
-        'aktersnurra/no-clown-fiesta.nvim',
+        'navarasu/onedark.nvim',
         lazy = false,
         priority = 1000,
-        config = function()
-            vim.cmd('colorscheme no-clown-fiesta')
+        opts = {
+            style = 'warmer',
+        },
+        config = function(_, opts)
+            require('onedark').setup(opts)
+            vim.cmd('colorscheme onedark')
         end,
     },
 
@@ -18,11 +22,18 @@ return {
         opts = {
             ensure_installed = { 'lua', 'cpp', 'glsl', 'vim', 'vimdoc', 'markdown', 'bash' },
             auto_install = true,
-            highlight = { enable = 'true' },
+            highlight = { enable = true },
         },
         config = function(_, opts)
             require('nvim-treesitter.configs').setup(opts)
-            vim.treesitter.language.register("angular", { "html" })
+            vim.treesitter.language.register('angular', { 'html' })
+
+            vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
+                pattern = { "*.vert", "*.frag" },
+                callback = function()
+                    vim.cmd("setlocal filetype=glsl")
+                end,
+            })
         end,
     },
 
