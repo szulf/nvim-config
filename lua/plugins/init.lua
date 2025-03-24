@@ -4,16 +4,22 @@ end
 
 return {
     {
-        'navarasu/onedark.nvim',
+        'catppuccin/nvim',
         lazy = false,
         priority = 1000,
         opts = {
-            style = 'warmer',
+            color_overrides = {
+                mocha = {
+                    base = "#181818",
+                    mantle = "#181818",
+                    crust = "#181818",
+                },
+            },
         },
         config = function(_, opts)
-            require('onedark').setup(opts)
-            vim.cmd('colorscheme onedark')
-        end,
+            require('catppuccin').setup(opts)
+            vim.cmd('colorscheme catppuccin')
+        end
     },
 
     {
@@ -232,12 +238,25 @@ return {
     },
 
     {
-        'stevearc/oil.nvim',
-        opts = {
-            view_options = {
-                show_hidden = true,
-            },
-        },
+        'nvim-tree/nvim-tree.lua',
+        opts = {},
+        config = function(_, opts)
+            require('nvim-tree').setup(opts)
+            map('<leader>fe', function() vim.cmd('NvimTreeToggle') end, 'Open the file explorer')
+
+            -- im so proud of myself for writing this
+            -- first autocommand thats actually written by myself
+            vim.api.nvim_create_autocmd({"BufEnter"}, {
+                callback = function()
+                    local api = require('nvim-tree.api')
+                    local bufnr = vim.api.nvim_get_current_buf()
+
+                    if not api.tree.is_tree_buf(bufnr) then
+                        api.tree.close()
+                    end
+                end
+            })
+        end
     },
 
     {

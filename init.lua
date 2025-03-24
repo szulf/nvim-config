@@ -2,6 +2,9 @@ local function map(key, action, desc)
     vim.keymap.set('n', key, action, { desc = desc })
 end
 
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
 
@@ -42,8 +45,6 @@ map('<C-d>', '<C-d>zz', 'Go down and center')
 map('<C-u>', '<C-u>zz', 'Go up and center')
 
 map('<C-Space>', '<C-6>', 'Switch between two buffers')
-
-map('<leader>fe', function() vim.cmd('Oil') end, 'Open the file explorer')
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight text after yanking',
