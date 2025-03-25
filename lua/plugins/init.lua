@@ -239,7 +239,11 @@ return {
 
     {
         'nvim-tree/nvim-tree.lua',
-        opts = {},
+        opts = {
+            view = {
+                width = 40,
+            },
+        },
         config = function(_, opts)
             require('nvim-tree').setup(opts)
             map('<leader>fe', function() vim.cmd('NvimTreeToggle') end, 'Open the file explorer')
