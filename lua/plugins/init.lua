@@ -131,6 +131,8 @@ return {
                 html = {},
 
                 ts_ls = {},
+
+                csharp_ls = {},
             }
 
             require('mason').setup()
@@ -154,51 +156,23 @@ return {
     },
 
     {
-        'hrsh7th/nvim-cmp',
-
-        event = 'InsertEnter',
+        'saghen/blink.cmp',
 
         dependencies = {
-            {
-                'L3MON4D3/LuaSnip',
-                build = (function()
-                    return 'make install_jsregexp'
-                end)(),
-            },
-            'saadparwaiz1/cmp_luasnip',
-
-            'hrsh7th/cmp-nvim-lsp',
-            'hrsh7th/cmp-path',
+            'rafamadriz/friendly-snippets',
         },
 
-        config = function()
-            local cmp = require('cmp')
-            local luasnip = require('luasnip')
-            luasnip.config.setup({})
+        opts = {
+            keymap = {
+                preset = 'default',
+                ['<C-space>'] = { 'accept' },
+                ['<C-k>'] = { 'show_documentation' },
+            },
 
-            cmp.setup({
-                snippet = {
-                    expand = function(args)
-                        luasnip.lsp_expand(args.body)
-                    end
-                },
-
-                completion = { completeopt = 'menu, menuone, noinsert' },
-
-                mapping = {
-                    ['<C-n>'] = cmp.mapping.select_next_item(),
-                    ['<C-p>'] = cmp.mapping.select_prev_item(),
-                    ['<C-Space>'] = cmp.mapping.confirm({ select = true }),
-                    ['<C-Alt>'] = cmp.mapping.complete({}),
-                },
-
-                sources = {
-                    { name = 'nvim_lsp' },
-                    { name = 'luasnip' },
-                    { name = 'path' },
-                },
-            })
-        end,
+            fuzzy = {
+                implementation = 'rust',
+            },
+        },
     },
 
     {
@@ -250,12 +224,33 @@ return {
 
             -- im so proud of myself for writing this
             -- first autocommand thats actually written by myself
-            vim.api.nvim_create_autocmd({"BufEnter"}, {
+            vim.api.nvim_create_autocmd({'BufEnter'}, {
                 callback = function()
                     local api = require('nvim-tree.api')
                     local bufnr = vim.api.nvim_get_current_buf()
 
-                    if not api.tree.is_tree_buf(bufnr) then
+                    local w = ''
+
+                    if api.tree.is_tree_buf(bufnr) then
+                        -- local wins = vim.api.nvim_list_wins()
+                        --
+                        -- for _, win in ipairs(wins) do
+                        --     local buf = vim.api.nvim_win_get_buf(win)
+                        --
+                        --     if buf ~= bufnr then
+                        --         local x = vim.api.nvim_buf_get_lines(0, 0, -1, false)
+                        --
+                        --         for i, file in ipairs(x) do
+                        --             w = w .. i .. '-' .. file .. ' '
+                        --         end
+                        --
+                        --         api.tree.find_file({
+                        --             buf = buf
+                        --         })
+                        --     end
+                        -- end
+                        -- print(w)
+                    else
                         api.tree.close()
                     end
                 end
