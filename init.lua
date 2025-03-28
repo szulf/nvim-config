@@ -1,9 +1,6 @@
-local function map(key, action, desc)
+function Map(key, action, desc)
     vim.keymap.set('n', key, action, { desc = desc })
 end
-
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
 
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
@@ -25,6 +22,8 @@ vim.opt.smartcase = true
 vim.opt.list = true
 vim.opt.listchars = { trail = '·', tab = '> ' }
 
+vim.opt.showmode = false
+
 vim.opt.termguicolors = true
 
 vim.opt.guicursor = ''
@@ -32,19 +31,19 @@ vim.opt.guicursor = ''
 vim.opt.inccommand = 'split'
 
 vim.opt.hlsearch = true
-map('<Esc>', function() vim.cmd('nohlsearch') end)
+Map('<Esc>', function() vim.cmd('nohlsearch') end)
 
 vim.o.clipboard = 'unnamedplus'
 
-map('<C-h>', '<C-w><C-h>', 'Move to window [H]')
-map('<C-j>', '<C-w><C-j>', 'Move to window [J]')
-map('<C-k>', '<C-w><C-k>', 'Move to window [K]')
-map('<C-l>', '<C-w><C-l>', 'Move to window [L]')
+Map('<C-h>', '<C-w><C-h>', 'Move to window [H]')
+Map('<C-j>', '<C-w><C-j>', 'Move to window [J]')
+Map('<C-k>', '<C-w><C-k>', 'Move to window [K]')
+Map('<C-l>', '<C-w><C-l>', 'Move to window [L]')
 
-map('<C-d>', '<C-d>zz', 'Go down and center')
-map('<C-u>', '<C-u>zz', 'Go up and center')
+Map('<C-d>', '<C-d>zz', 'Go down and center')
+Map('<C-u>', '<C-u>zz', 'Go up and center')
 
-map('<C-Space>', '<C-6>', 'Switch between two buffers')
+Map('<C-Space>', '<C-6>', 'Switch between two buffers')
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     desc = 'Highlight text after yanking',
@@ -55,24 +54,24 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 
 require('config.lazy')
 
-map('<leader>mk', function() vim.cmd('make') end, 'Build the current project')
-map('<leader>mo', function() vim.cmd('copen') end, 'View the compilation window')
-local function load_local_makeprg()
-    local project_file = vim.fn.getcwd() .. '/makeprg'
-    if vim.fn.filereadable(project_file) == 1 then
-        local text = table.concat(vim.fn.readfile(project_file), '\n')
-        vim.opt_local.makeprg = text
-    end
-end
-
-vim.api.nvim_create_augroup('ProjectConfig', { clear = true })
-vim.api.nvim_create_autocmd('BufEnter', {
-    group = 'ProjectConfig',
-    callback = load_local_makeprg,
-})
+-- Map('<leader>mk', function() vim.cmd('make') end, 'Build the current project')
+-- Map('<leader>mo', function() vim.cmd('copen') end, 'View the compilation window')
+-- local function load_local_makeprg()
+--     local project_file = vim.fn.getcwd() .. '/makeprg'
+--     if vim.fn.filereadable(project_file) == 1 then
+--         local text = table.concat(vim.fn.readfile(project_file), '\n')
+--         vim.opt_local.makeprg = text
+--     end
+-- end
+--
+-- vim.api.nvim_create_augroup('ProjectConfig', { clear = true })
+-- vim.api.nvim_create_autocmd('BufEnter', {
+--     group = 'ProjectConfig',
+--     callback = load_local_makeprg,
+-- })
 
 if vim.g.neovide then
-    vim.opt.guifont = "JetBrains Mono NL:h11"
+    vim.opt.guifont = 'JetBrains Mono NL:h11'
 end
 
-map('<leader>ds', vim.diagnostic.open_float, 'Show the whole diagnostic msg')
+Map('<leader>ds', vim.diagnostic.open_float, 'Show the whole diagnostic msg')
